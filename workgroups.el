@@ -378,7 +378,7 @@ stable, but is left here for the time being.")
   "`defface' wrapper adding a lookup key used by `wg-fontify'."
   (declare (indent 2))
   `(progn
-     (pushnew (cons ,key ',face) wg-face-abbrevs :test #'equal)
+     (cl-pushnew (cons ,key ',face) wg-face-abbrevs :test #'equal)
      (defface ,face ,spec ,doc ,@args)))
 
 (wg-defface wg-current-workgroup-face :cur
@@ -1700,7 +1700,7 @@ Worgroups are updated with their working configs in the
      (or (nth n wl) (error "There are only %d workgroups" (length wl))))))
 
 ;; Define wg-switch-to-index-[0-9]:
-(macrolet
+(cl-macrolet
     ((defi (n)
        `(defun ,(intern (format "wg-switch-to-index-%d" n)) ()
           ,(format "Switch to the workgroup at index %d in the list." n)
