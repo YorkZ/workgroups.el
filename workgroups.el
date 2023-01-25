@@ -458,9 +458,9 @@ Iterative to prevent stack overflow."
   `(let (,@(mapcar (lambda (sym) `(,sym (gensym))) syms)) ,@body))
 
 (defmacro wg-dbind (args expr &rest body)
-  "Abbreviation of `destructuring-bind'."
+  "Abbreviation of `cl-destructuring-bind'."
   (declare (indent 2))
-  `(destructuring-bind ,args ,expr ,@body))
+  `(cl-destructuring-bind ,args ,expr ,@body))
 
 (defmacro wg-dohash (spec &rest body)
   "do-style wrapper for `maphash'."
@@ -685,7 +685,7 @@ FACEKEY must be a key in `wg-face-abbrevs'."
   (declare (indent defun))
   `(concat
     ,@(wg-docar (spec specs)
-        (typecase spec
+        (cl-typecase spec
           (cons (if (keywordp (car spec))
                     `(wg-add-face
                       ,(car spec)
