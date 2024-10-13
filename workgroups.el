@@ -813,8 +813,8 @@ minibuffer is active.")))
 
 (defun wg-scale-wsize (w width-scale height-scale)
   "Scale W's size by WIDTH-SCALE and HEIGHT-SCALE."
-  (flet ((wscale (width)  (truncate (* width  width-scale)))
-         (hscale (height) (truncate (* height height-scale))))
+  (cl-flet ((wscale (width)  (truncate (* width  width-scale)))
+            (hscale (height) (truncate (* height height-scale))))
     (wg-adjust-wsize w #'wscale #'hscale)))
 
 (defun wg-equal-wtrees (w1 w2)
@@ -965,10 +965,10 @@ EWIN should be an Emacs window object."
   "Return a new Workgroups wtree from EWTREE or `window-tree'.
 If specified, EWTREE should be an Emacs `window-tree'."
   (wg-error-on-active-minibuffer)
-  (flet ((inner (ewt) (if (windowp ewt) (wg-ewin->window ewt)
-                        (wg-dbind (dir edges . wins) ewt
-                          (wg-make-wtree
-                           dir edges (mapcar #'inner wins))))))
+  (cl-flet ((inner (ewt) (if (windowp ewt) (wg-ewin->window ewt)
+                           (wg-dbind (dir edges . wins) ewt
+                             (wg-make-wtree
+                              dir edges (mapcar #'inner wins))))))
     (let ((ewt (car (or ewtree (window-tree)))))
       (when (and (windowp ewt) (window-minibuffer-p ewt))
         (error "Workgroups can't operate on minibuffer-only frames."))
